@@ -1,0 +1,13 @@
+package com.zensar.model;
+
+public class Coupon {
+	
+	private long id;
+	private String  code;
+	private String discount;
+	private String expDate;
+	
+	
+	
+
+}

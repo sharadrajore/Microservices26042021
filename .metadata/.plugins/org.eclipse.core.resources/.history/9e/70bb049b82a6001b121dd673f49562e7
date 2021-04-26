@@ -1,0 +1,18 @@
+package com.zensar.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.zensar.model.Coupon;
+import com.zensar.repository.CouponRepository;
+
+public class CouponServiceImpl implements CouponService {
+	
+	@Autowired
+	private CouponRepository couponRepository;
+
+	@Override
+	public Coupon createCoupon(Coupon coupon) {
+		return couponRepository.save(coupon);
+	}
+
+}
