@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.zensar.model.Coupon;
 
-@FeignClient("COUPON-SERVICE")
+@FeignClient("GATEWAY-SERVICE")
 public interface CouponClient {
 
-	@GetMapping("/couponapi/coupons/{code}")
+	@GetMapping("/couponapi/coupon/{code}")
 	Coupon getCoupon(@PathVariable("code")String code);
 	
 }

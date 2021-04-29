@@ -13,6 +13,8 @@ import com.zensar.model.Product;
 import com.zensar.restclient.CouponClient;
 import com.zensar.services.ProductService;
 
+import io.github.resilience4j.retry.annotation.Retry;
+
 @RestController
 @RequestMapping("/productapi")
 public class ProductController {
@@ -27,6 +29,7 @@ public class ProductController {
 	private CouponClient client;
 	
 	@PostMapping("/products")
+	@Retry(name="product-api",fallbackMethod ="handleError" )
 	public Product insertProduct(@RequestBody Product product) {
 		
 		Coupon coupon=client.getCoupon(product.getCode());
@@ -34,6 +37,11 @@ public class ProductController {
 		//Coupon coupon = restTemplate.getForObject("http://localhost:8080/couponapi/coupons/"+product.getCode(), Coupon.class);
 		product.setPrice(product.getPrice().subtract(new BigDecimal(coupon.getDiscount())));
 		return productService.insertProduct(product);
+	}
+	
+	
+	public Product handleError(Product product,Exception exception) {
+		return product;
 	}
 	
 	
